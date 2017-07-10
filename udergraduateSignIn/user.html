@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>用户-大学生签到网</title>
+    <style>
+        html, body {
+            padding: 0;
+            margin: 0;
+            min-width: 1024px;
+            box-sizing: border-box;
+        }
+
+        input{
+            outline:none;
+            border-width: 0px;
+        }
+        ul {
+            list-style: none;
+            padding:0px;
+            margin: 0px;
+        }
+
+        h1 {
+            height: 70px;
+            padding-left: 150px;
+            line-height: 70px;
+        }
+
+        h1 img {
+            width: 50px;
+            height: 60px;
+        }
+
+        .center {
+            width: 100%;
+            height: 800px;
+            background-color: #f0f0f0;;
+        }
+
+        .center .header {
+            position: relative;
+            width: 900px;
+            height: auto;
+            margin: auto;
+            box-shadow: -4px 7px 46px 2px rgba(0, 0, 0, 0.1);
+        }
+
+        .center .header .header-top {
+            width: 100%;
+            height: 116px;
+            color: white;
+            background-image: url("images/login-background.jpg");
+            background-size: 100% 100%;
+        }
+        .center .header .header-top ul{
+            float: left;
+            margin-top: 5px;
+            margin-left: 200px;
+        }
+        .center .header .header-top ul li{
+            width: 294px;
+            height: 24px;
+            margin-top: 10px;
+            font-size: 12px;
+            line-height: 24px;
+        }
+        .center .header .header-top .name-wrapper{
+            float: left;
+            font-size: 20px;
+        }
+        .center .header .header-top .alter-name-btn{
+            float: left;
+            width: 24px;
+            height: 24px;
+            margin-left: 5px;
+            background-image: url("images/alter.png");
+            background-size: 100% 100%;
+        }
+        .center .header .header-top .btn{
+            float: right;
+            width: 80px;
+            height: 50px;
+            text-align: center;
+            line-height: 50px;
+            margin-top: 34px;
+            margin-right: 35px;
+            color: white;
+            cursor: pointer;
+            background-color: #33cccc;
+            border-radius: 4px;
+            transition: all .3s ease;
+        }
+        .center .header .header-top .btn:hover{
+            box-shadow: -2px 10px 20px -1px rgba(51, 204, 204, 0.4);
+        }
+        .center .header .header-bottom {
+            width: 100%;
+            height: 65px;
+            background-color: white;
+        }
+
+        .center .header .header-bottom ul,
+        .center .header .header-bottom ul li{
+            float: right;
+            height: 45px;
+        }
+        .center .header .header-bottom ul {
+            margin-top: 11px;
+        }
+        .center .header .header-bottom ul li{
+            width: 115px;
+            margin-right: 116px;
+            cursor: pointer;
+        }
+        .center .header .header-bottom ul li b{
+            display: inline-block;
+            width: 45px;
+            height: 100%;
+        }
+        .center .header .header-bottom ul li span{
+            float: right;
+            height: 100%;
+            font-size: 15px;
+            line-height: 45px;
+        }
+        .center .header .header-bottom ul li:nth-child(1) b{
+            background-image: url("images/kaoqing-info.png");
+            background-size: 100% 100%;
+        }
+        .center .header .header-bottom ul li:nth-child(2) b{
+            background-image: url("images/kecheng-info.png");
+            background-size: 100% 100%;
+        }
+        .center .header .header-bottom ul li:nth-child(3) b{
+            background-image: url("images/self-info.png");
+            background-size: 100% 100%;
+        }
+        .center .header .header-bottom .head-portrait-uploading{
+            float: left;
+            margin-top: 40px;
+            margin-left: 70px;
+            font-weight: 600;
+            background-color: white;
+            cursor: pointer;
+        }
+        .center .header .head-portrait {
+            position: absolute;
+            width: 140px;
+            height:140px;
+            top: 10px;
+            left: 30px;
+            border: 3px solid white;
+            border-radius: 50%;
+        }
+
+        .center .content{
+            width: 900px;
+            height: 600px;
+            margin: auto;
+            margin-top: 10px;
+            background-color: white;
+            box-shadow: -4px 7px 46px 2px rgba(0, 0, 0, 0.1);
+        }
+
+        .center .content .content-left{
+            float: left;
+            width: 19%;
+            min-height: 600px;
+        }
+        .center .content .content-right{
+            float: left;
+            width: 80%;
+            border-left: 1px solid black;
+            min-height: 600px;
+        }
+
+
+
+
+
+
+        .footer {
+            margin-top: 30px;
+        }
+
+        .footer ul {
+            width: 316px;
+            height: 21px;
+            margin: auto;
+        }
+
+        .footer ul li {
+            float: left;
+            margin-left: 15px;
+        }
+
+        .footer ul li a {
+            text-decoration: none;
+            color: black;
+        }
+
+        .footer h4 {
+            margin-top: 10px;
+            text-align: center;
+            font-weight: normal;
+        }
+    </style>
+</head>
+<body>
+<h1><img src="images/logo.jpg"> 大学生签到网</h1>
+<div class="center">
+    <div class="header">
+        <div class="header-top">
+            <ul>
+                <li>
+                    <div class="name-wrapper">
+                        <span>暂无昵称</span>
+                        <input type="text" style="display: none">
+                    </div>
+                    <span class="alter-name-btn"></span>
+                </li>
+                <li>
+                    账  号：20140657021112
+                </li>
+                <li>
+                    上一次登陆时间：2017-07-10 15:30:30
+                </li>
+            </ul>
+            <input class="btn" type="button" value="修改密碼">
+        </div>
+        <div class="header-bottom">
+            <input class="head-portrait-uploading" type="button" value="修改头像">
+            <ul>
+                <li><b></b><span>考勤记录</span></li>
+                <li><b></b><span>我的课表</span></li>
+                <li><b></b><span>个人信息</span></li>
+            </ul>
+        </div>
+        <img class="head-portrait" src="images/head-portrait.jpg">
+    </div>
+
+    <div class="content">
+        <div class="content-left">
+
+        </div>
+        <div class="content-right">
+
+        </div>
+    </div>
+</div>
+<div class="footer">
+    <ul>
+        <li><a href="#">关于我们</a></li>
+        <li><a href="#">联系我们</a></li>
+        <li><a href="#">广告服务</a></li>
+        <li><a href="#">友情链接</a></li>
+    </ul>
+    <h4>CopyRight © xxxxxxxxxx</h4>
+</div>
+</body>
+</html>
