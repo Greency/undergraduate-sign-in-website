@@ -1,7 +1,7 @@
 /**
  * Created by 10155 on 2017/7/9.
  */
-function FormValidation(){
+function FormValidation(pwd){
     var inputs,tooltips,btn,pswTwo;//pswTwo储存的是第一次输入的密码 用于后面和第二次输入的密码比较
 
     //储存状态 用于最后提交时验证
@@ -10,7 +10,7 @@ function FormValidation(){
         psw:false,
         pswTwo:false,
         email:false,
-        phonenumer:false
+        phonenumer:true
     }
 
     //设置提示的样式
@@ -123,7 +123,7 @@ function FormValidation(){
                 }
             })();break;
             case 3:(function(){
-                var regEmail=/^\w+@\w+\.com(\.cn)?$/i,
+                var regEmail=/^1[3|5|8]\d{9}$//*/^\w+@\w+\.com(\.cn)?$/i*/,
                     textValue = inputs[3].value;
                 if(textValue !== "手机号"){
                     if(regEmail.test(textValue)){
@@ -141,7 +141,7 @@ function FormValidation(){
             case 4:(function(){
                 var regPhone = /^1[3|5|8]\d{9}$/,
                     textValue = inputs[4].value;
-                if(textValue !== "验证码"){
+               /* if(textValue !== "验证码"){
                     if(regPhone.test(textValue)){
                         _self.tooltipsShow("success",4,true);
                         flag.phonenumer = true;
@@ -152,28 +152,29 @@ function FormValidation(){
                 }else{
                     _self.tooltipsShow("empty",4,true);
                     flag.phonenumer = false;
-                }
+                }*/
             })();break;
         }
     };
 
     //提交
-    this.validationAll = function(){
+    this.validationAll = function(event){
         var isOk = true;
         for(var attribute in flag){
             if(!flag[attribute]) isOk = false;
         }
         if(isOk){
-            alert("success");
+           inputs[1].value = hex_md5(inputs[1].value)
         }else{
-            alert("error");
+        	event.preventDefault()
+            alert("填写信息不全或错误");
         }
     };
 
     //绑定事件
     this.addListener = function(){
         var _self = this;
-        for(var i = 0;i < inputs.length;i++){
+        for(var i = 0;i < inputs.length - 1;i++){
             (function(num){
                 inputs[num].onfocus = function(){
                     _self.tooltipsShow(null,num,true);
@@ -184,8 +185,8 @@ function FormValidation(){
             })(i);
         }
 
-        document.getElementById("submit").onclick = function(){
-            _self.validationAll();
+        document.getElementById("submit").onclick = function(e){
+            _self.validationAll(e);
         }
     };
 

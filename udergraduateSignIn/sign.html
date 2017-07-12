@@ -114,25 +114,25 @@
 <body>
     <h1><img src="images/logo.jpg">      大学生签到网</h1>
     <div class="center">
-            <form id="user-sign-form" class="user-sign-form">
+            <form action="signAction.php" method="post" id="user-sign-form" class="user-sign-form">
                 <div>
-                    <input class="input" value="学号">
+                    <input class="input" value="学号" name="account">
                     <span class="tooltips"></span>
                 </div>
                 <div>
-                    <input class="input" type="password" value="密码">
+                    <input class="input" type="password" value="密码" name="password">
                     <span class="tooltips"></span>
                 </div>
                 <div>
-                    <input class="input" type="password" value="确认密码">
+                    <input class="input" type="password" value="确认密码" name="passwordRepeat">
                     <span class="tooltips"></span>
                 </div>
                 <div>
-                    <input class="input" value="手机号">
+                    <input class="input" value="手机号" name="iphone">
                     <span class="tooltips"></span>
                 </div>
                 <div>
-                    <div><input class="input identifying-code" value="验证码"><img class="identifying-code-img" src="images/identifying-code.png"></div>
+                    <div><input class="input identifying-code" name="identifyingCode" value="验证码"><img class="identifying-code-img" src="yanzhengma.php"></div>
                     <span class="tooltips"></span>
                 </div>
                 <div>
@@ -150,10 +150,14 @@
         </ul>
         <h4>CopyRight © xxxxxxxxxx</h4>
     </div>
+<script src="javascripts/md5.js"></script>
 <script src="javascripts/formvalidation.js"></script>
 <script>
     new FormValidation().init()
-
+    
+	document.getElementsByClassName("identifying-code-img")[0].onclick = function(){
+    	this.src = "yanzhengma.php?"+new Date() 
+    }
 </script>
 </body>
 </html>
