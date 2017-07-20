@@ -1,7 +1,7 @@
 /**
  * Created by 10155 on 2017/7/9.
  */
-function FormValidation(pwd){
+function FormValidation(){
     var inputs,tooltips,btn,pswTwo;//pswTwo储存的是第一次输入的密码 用于后面和第二次输入的密码比较
 
     //储存状态 用于最后提交时验证
@@ -71,13 +71,15 @@ function FormValidation(pwd){
     this.validation = function(num){
         var _self = this;
         switch(num){
-            case 0:(function(){
+            case 0:(function(){  //验证学号
                 var regNum = /^[0-9]+$/
                 var textValue = inputs[0].value //获取输入框的值
                 var allLength = textValue.length  //字数总长度
                 if(textValue !="学号"){
+                	//验证输入的学号是否符合规定的长度
                     if(allLength >= 12 && allLength <=16 && regNum.test(textValue)){
                         _self.tooltipsShow("success",0,true);
+                        //异步请求 判断用户注册的学号是否已经存在
                         $.ajax({
                             type:"post",
                             dataType:"json",
@@ -104,13 +106,14 @@ function FormValidation(pwd){
                     flag.name = false;
                 }
             })();break;
-            case 1:(function(){
-                var regEnglish = /([\x00-\xff])/g,
+            case 1:(function(){ //验证密码
+                var regPwd = /([\x00-\xff])/g,
                     textValue = inputs[1].value,
-                    englishLength;
-                textValue.match(regEnglish) ? englishLength = (textValue.match(regEnglish)).length : englishLength = 0;
+                    pwsLength;
+                textValue.match(regPwd) ? pwsLength = (textValue.match(regPwd)).length : pwsLength = 0;
                 if(textValue != "密码"){
-                    if(englishLength >= 6 && englishLength <= 16){
+                	//判断密码长度是否符合规定的长度
+                    if(pwsLength >= 6 && pwsLength <= 16){
                         pswTwo = textValue;
                         _self.tooltipsShow("success",1,true);
                         flag.psw = true;
@@ -123,7 +126,7 @@ function FormValidation(pwd){
                     flag.psw = false;
                 }
             })();break;
-            case 2:(function(){
+            case 2:(function(){  //验证第二次密码
                 var textValue = inputs[2].value;
                 if(textValue !== "确认密码"){
                     if(textValue === pswTwo){
@@ -139,10 +142,10 @@ function FormValidation(pwd){
                 }
             })();break;
             case 3:(function(){
-                var regEmail=/^1[3|5|8]\d{9}$//*/^\w+@\w+\.com(\.cn)?$/i*/,
+                var regiphone=/^1[3|5|8]\d{9}$/,
                     textValue = inputs[3].value;
                 if(textValue !== "手机号"){
-                    if(regEmail.test(textValue)){
+                    if(regiphone.test(textValue)){
                         _self.tooltipsShow("success",3,true);
                         flag.email = true;
                     }else{
@@ -154,8 +157,10 @@ function FormValidation(pwd){
                     flag.email = false;
                 }
             })();break;
-            case 4: (function () {
+            case 4: (function () {  //验证码验证
                 var textValue = inputs[4].value
+                
+                //异步请求验证
                 $.ajax({
                     type:"post",
                     dataType:"json",
@@ -180,9 +185,12 @@ function FormValidation(pwd){
     //提交
     this.validationAll = function(event){
         var isOk = true;
+        //验证每一个输入框的所输入的内容是否是符合要求
         for(var attribute in flag){
             if(!flag[attribute]) isOk = false;
         }
+        
+        //验证成功后向后端提交注册数据
         if(isOk){
             $.ajax({
                 type:"post",
@@ -198,7 +206,7 @@ function FormValidation(pwd){
                 }
             })
         }else{
-        	event.preventDefault()
+        	//event.preventDefault()
             alert("填写信息不全或错误");
         }
     };
@@ -222,7 +230,7 @@ function FormValidation(pwd){
         }
     };
 
-    this.ajax = function(){
+   /* this.ajax = function(){
         $.ajax({
             type:"post",
             dataType:"json",
@@ -236,7 +244,7 @@ function FormValidation(pwd){
                 }
             }
         })
-    }
+    }*/
     //初始化
     this.init = function(){
         btn = document.getElementById("submit");

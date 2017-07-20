@@ -7,7 +7,7 @@ class SqlOperation
 
     function __construct($locahost, $account, $pwd, $datebase)
     {
-        $mysqli = new mysqli("localhost", "root", "", "web");
+        $mysqli = new mysqli($locahost, $account, $pwd, $datebase);
         $mysqli->set_charset("utf8");
         $this->mysqli = $mysqli;
     }

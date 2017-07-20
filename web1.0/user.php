@@ -1,4 +1,4 @@
- <?php
+<?php
 session_start();
 if (empty($_SESSION['userId'])) {
     header("location:login.html");
@@ -391,7 +391,7 @@ h1 img {
 	{
 	display: none;
 	width: 98%;
-	height: 100%;
+	height: 40px;
 	border-bottom: 1px solid rgba(0, 0, 0, 1);
 }
 
@@ -687,8 +687,7 @@ h1 img {
 				<li><img src="images/head-portrait5.jpg"></li>
 				<li><img src="images/head-portrait6.jpg"></li>
 			</ul>
-			<form id="alter-name-form" class="alter-name-form" action=""
-				method="post" style="display: none">
+			<form id="alter-name-form" class="alter-name-form" action=""method="post" style="display: none">
 				<h6>昵称修改</h6>
 				<input id="name-form" type="text">
 				<div>
@@ -790,11 +789,9 @@ h1 img {
 								</tr>
 							</table>
 							<div>
-								<input id="editBtn" class="btn" type="button" value="编辑"
-									style="display: block"> <input id="submitBtn" class="btn"
-									type="button" value="完成" style="display: none"> <input
-									id="cancleBtn" class="btn" type="button" value="取消"
-									style="display: none">
+								<input id="editBtn" class="btn" type="button" value="编辑" style="display: block">
+							    <input id="submitBtn" class="btn" type="button" value="完成" style="display: none">
+							    <input id="cancleBtn" class="btn" type="button" value="取消" style="display: none">
 							</div>
 						</form>
 					</div>
@@ -871,7 +868,7 @@ h1 img {
     	                checkInTime = parseInt(temp.substring(0,temp.indexOf(":")))  //课程规定签到时间 
                        
                         //该课程已经超过规定签到时间，设为只能点击迟到或请假按钮
-    	                if(currenttime >= checkInTime - 1){
+    	                if(currenttime >= checkInTime ){
         	                //清除计时器
     	                    clearInterval(timeout) 
     	                    $($($(courseli[courseliindex]).children()[1]).children()[0]).removeClass("on").addClass("off").off()
@@ -888,6 +885,7 @@ h1 img {
                 if (i === 3) {
                     var temp = (labels[i]).innerText
                     if (temp !== "未填") {
+                        //截取用户填写的样式
                         var first = temp.indexOf("-"),
                                 last = temp.lastIndexOf("-"),
                                 length = temp.length;
@@ -910,6 +908,7 @@ h1 img {
                     }
 
                 } else {
+                   
                     $(inputs[j]).val($(labels[i]).text())
                 }
 
@@ -936,7 +935,13 @@ h1 img {
                     $(labels[i]).text(str)
                     $(".adressHidden").val(str)
                 } else {
-                    $(labels[i]).text($(inputs[j]).val())
+                	var text = $(inputs[j]).val();
+                    if(i == 1){
+                        if(text !== "未填"){
+                    	text = text.substring(0,7)+"********"    
+                        }                 
+                    }
+                    $(labels[i]).text(text)
                 }
                 j++;
             }
@@ -989,7 +994,7 @@ h1 img {
                                 if (i > 2) {
                                 	if(i == 4){ 
                                     	if(value !== "未填")
-                                    	value = value.substring(0,7)+"********"
+                                 		   value = value.substring(0,7)+"********"
                                     	}
                                     $(label[i - 3]).text(value)
                                     
@@ -1012,13 +1017,14 @@ h1 img {
                             $(inputs).css("display", "inline-block")
                             setInputValue(labels, inputs)
                             $(labels).css("display", "none")
+                            //判断姓名是否能被编辑
                             if($(labels[0]).text() !== "未填"){
                             	$(labels[0]).css("display","block")
                             	$(inputs[0]).css("display","none")
                                 }else{
                                     $(inputs[0]).attr("name","name")
                                     }
-
+                            //判断身份证是否能被编辑
                             if($(labels[1]).text() !== "未填"){
                             	$(labels[1]).css("display","block")
                             	$(inputs[1]).css("display","none")
@@ -1028,31 +1034,21 @@ h1 img {
                             $(this).css("display", "none")
                             $("#submitBtn").css("display", "inline-block")
                             $("#cancleBtn").css("display", "inline-block")
-                            $(".iphone").on("blur",function(){
-                                if(!(/^1[3|5|8]\d{9}$/.test($(this).val()))){
-                                    alert("手机号格式不对")
-                                    }else{
-                                        flag = true
-                                        }
-                                })
                         })
                         $("#submitBtn").on("click", function () {
                             //完成按钮
-                            if(flag){
                             $(this).css("display", "none")
                             $("#cancleBtn").css("display", "none")
                             $("#editBtn").css("display", "inline-block")
                             $(labels).css("display", "inline-block")
                             setLabelText(labels, inputs)
                             $(inputs).css("display", "none")
-                            console.log($("#self-info-form").serialize())
-                            
+                            //将修改后的信息传给后端
                             ajax({data: "status=update&type=userall&" + $("#self-info-form").serialize()}, function (data) {
                                 if (data['status'] === 1) {
                                     console.log(true)
                                 }
                             })
-                         }
                         })
                         $("#cancleBtn").on("click", function () {
                             //取消按钮
@@ -1148,7 +1144,7 @@ h1 img {
                     	           currenttime = parseInt(date.getHours()),  //当前时间
                   	               temp = courses[index].coursestime,
                   	               checkInTime = parseInt(temp.substring(0,temp.indexOf(":")))  //课程规定签到时间
-                  	               
+                  	               console.log(checkInTime)
                      	             if(currenttime > checkInTime -1){  //已经错过签到的时间
                     	            	 courses[index].coursesstate = 1
                         	             }else if(currenttime < checkInTime - 1){  //还没到签到时间
@@ -1157,7 +1153,9 @@ h1 img {
         	                                   var minutes = date.getMinutes()  
     	                                	   if(minutes >= 39 && minutes <= 59){
     	                                		   courses[index].coursesstate = 2
-        	                                	   }
+        	                                	   }else{
+        	                                		   courses[index].coursesstate = 3
+            	                                	   }
         	                                   }
                    	          }
                        }
@@ -1193,7 +1191,7 @@ h1 img {
                             		        case "迟到" : state = 2;break;
                             		        case "请假" : state = 3;break;
                         		        }
-                     		        	ajax({data:{status:"insert",type:"kaoqing",adress:courses[selfindex].coursesadress,state:state,course:courses[selfindex].coursesname}},function(data){
+                     		        	ajax({data:{status:"insert",type:"kaoqing",adress:courses[selfindex].coursesadress,state:state,coursesname:courses[selfindex].coursesname}},function(data){
                      		        	    
                          		        	})
                        		         })                   		         
@@ -1252,7 +1250,8 @@ h1 img {
                         html +=  "</td><td>查看详情</td></tr>"
                     }
                     $("#attendance-record-content").html(html)
-
+                    
+                
 
                     //配置数据
                     var option = {

@@ -10,6 +10,7 @@ var Paging = function (option) {
         paging,  //获取每一个li标签
         currentPage = 1  //当前页
 
+    //绘制分页按钮的样式
     this.show = function () {
         var _num = 0
         if (option.pages >= option.displayPage) {
@@ -28,10 +29,14 @@ var Paging = function (option) {
         $(paging[_num + 4]).css("width", "50px")
         pagingThis = paging[2]
     }
-
+    
+    //页数按钮的样式的改变
     this.changeStyle = function (type, arg1) {
+    	//type:取值为“+”或者“-”,“+”代表下一页,"-"代表上一页；arg1：代表点击的是首页还是尾页
         var _index = 0,  //索引
             _num = 0
+            
+        //上一页和下一页的样式的改变
         if (option.pages >= option.displayPage) {
             if (type === "+") {
                 if (pagingThis.innerText !== "" + option.displayPage && parseInt(pagingThis.innerText) < option.displayPage) {
@@ -67,6 +72,8 @@ var Paging = function (option) {
             }
         }
         index = 0
+        
+        //首页和尾页的样式改变
         if (arg1 !== undefined) {
             $(pagingThis).css({"color": "black", "background": "rgba(0, 0, 0, .1)"})
             if (arg1 === 1) {
@@ -86,6 +93,7 @@ var Paging = function (option) {
 
     }
 
+    //绑定事件
     this.addListener = function () {
         var _self = this
         paging.on("click", function () {
@@ -102,7 +110,6 @@ var Paging = function (option) {
                                 --currentPage
                                 _self.changeStyle("-")
                             }
-
                         } else if (_text === "下一页") {
                             if (currentPage < option.pages) {
                                 ++currentPage
@@ -126,7 +133,7 @@ var Paging = function (option) {
         )
     }
 
-    //绘制html
+    //将获取的数据显示到html中
     this.drawHtml = function(currentPage){
         $.ajax({
             type: "post",
